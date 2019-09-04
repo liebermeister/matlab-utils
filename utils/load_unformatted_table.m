@@ -1,10 +1,6 @@
 function T = load_unformatted_table(filename)
 
-% LOAD_UNFORMATTED_TABLE load data table
-%
-% T = load_unformatted_table(filename)
-%
-% loads table (not required to have proper column headers); removes empty rows and columns
+% load table (not required to have proper column headers; remove empty rows and columns
 
 fid  = fopen(filename);
 if fid <0, 
@@ -15,7 +11,7 @@ stop = 0;
 T = {};
 while ~stop,
   this_line = fgetl(fid);
-  if this_line == -1,
+  if this_line == -1, 
     stop = 1; 
   else,
     this_line = Strsplit(sprintf('\t'),this_line,'omit');

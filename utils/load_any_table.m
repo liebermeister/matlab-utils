@@ -19,7 +19,7 @@ try
     tabnum = max(tabnum, length(strfind(column_titles,delimiter)));
   end
 catch
-  error(['File ' filename ' not found.']);
+  error(['Error while opening file ' filename '.']);
 end
 fclose(fid);
 
@@ -36,4 +36,6 @@ for i=1:length(A),
   end
 end
 
-result = result(:,find(sum(cellfun('length',result))>0));
+if size(result,1)>1,
+  result = result(:,find(sum(cellfun('length',result))>0));
+end
