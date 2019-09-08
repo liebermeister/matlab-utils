@@ -1,6 +1,10 @@
-Matlab utility functions used in other repositories
-===================================================
+Matlab utility functions
+========================
 
-Wolfram Liebermeister (2019)
+This repository contains matlab utility functions used in my other repositories
 
-Contact: <wolfram.liebermeister@gmail.com>
+## License
+This package is released under the [GNU General Public License](LICENSE).
+
+## Contact
+Please contact [Wolfram Liebermeister](wolfram.liebermeister@gmail.com) with any questions or comments.
