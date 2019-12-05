@@ -88,6 +88,12 @@ for k=1:nlines,
 	  end
       my_table{k,l} = dum;
     else,
+      if islogical(my_text), 
+        switch my_text,
+          case 1, my_text = 'True';
+          case 0, my_text = 'False';
+        end
+      end
       my_table{k,l} = char(my_text);
     end 
    end
