@@ -24,11 +24,13 @@ else,
 end
    
 if isempty(rownames), set(gca,'YTick',[]); 
-else, set(gca,'YTick',1:size(X,1)); set(gca,'YTickLabel',rownames);
+else, set(gca,'YTick',1:size(X,1)); set(gca,'YTickLabel',strrep(rownames,'_',' '));
 end
 
 if isempty(colnames), set(gca,'XTick',[]); 
-else, set(gca,'XTick',1:size(X,2)); set(gca,'XTickLabel',colnames);
+else, 
+  %set(gca,'XTick',1:size(X,2)); set(gca,'XTickLabel',strrep(colnames,'_',' '));
+  my_xticklabel(1:size(X,2),[],strrep(colnames,'_',' '));
 end
 
 %colorbar
