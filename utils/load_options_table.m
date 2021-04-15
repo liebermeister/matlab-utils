@@ -1,6 +1,8 @@
 function GreatBigOptions = load_options_table(tablefile,base_DIR)
 
-% tablefile can be th ename of the table file
+% GreatBigOptions = load_options_table(tablefile,base_DIR)
+%
+% tablefile can be the name of the table file
 % or the table itself
 
 if isstr(tablefile), 
