@@ -1,14 +1,54 @@
-function [x_centre, x1, x2] = find_polytope_centre(M_eq,b_eq,M_ineq,b_ineq,x_lower,x_upper, x_try)
+function [x_centre, x1, x2] = find_polytope_centre(M_eq,b_eq,M_ineq,b_ineq,x_lower,x_upper, epsilon, x_test)
 
-% [x_centre, x1, x2] = find_polytope_centre(M_eq, b_eq, M_ineq, b_ineq, x_lower, x_upper, x_try)
+% [x_centre, x1, x2] = find_polytope_centre(M_eq, b_eq, M_ineq, b_ineq, x_lower, x_upper, epsilon, x_test)
 %
 % Central vector and extreme vectors (along coordinate axes) of a convex polytope
 %
 % Conditions:
-%  x_try >= x_lower
-%  x_try <= x_upper
-%  M_ineq * x_try <= b_ineq
-%  M_eq * x_try == b_eq
+%  x_test >= x_lower + epsilon
+%  x_test <= x_upper - epsilon
+%  M_ineq * x_test <= b_ineq - epsilon
+%  M_eq * x_test == b_eq
+
+eval(default('epsilon','[]','x_test','[]'));  
+
+% ------------------------------------------------
+% test example
+
+
+if 0,
+  M_eq    = [];
+  b_eq    = [];
+  M_ineq  = [];
+  b_ineq  = [];
+  x_lower = -1;
+  x_upper =  1;
+  x = find_polytope_centre(M_eq,b_eq,M_ineq,b_ineq,x_lower,x_upper);
+end
+
+
+% ------------------------------------------------
+% check if test vector satisfies all constraints (used only for debugging)
+
+
+if length(x_test),
+  lower_violated = find(x_test < x_lower + epsilon)
+  upper_violated = find(x_test > x_upper - epsilon)
+  ineq_violated =[];
+  if ~isempty(M_ineq),
+    ineq_violated = find(M_ineq * x_test > b_ineq - epsilon)
+  end
+  eq_violated =[];
+  if ~isempty(M_eq),
+    eq_violated = find(M_eq * x_test ~= b_eq)
+  end
+  if length([lower_violated; lower_violated; ineq_violated; eq_violated]), 
+    display('Warning: test vector does not satisfy constraints! Results for x_test:');
+  end
+end
+
+% ------------------------------------------
+% actual function
 
 x_length = length(x_lower);
 
@@ -29,42 +69,26 @@ if sum(x_upper < x_lower), error('Wrong bounds'); end
 for it = 1:x_length,
   z = zeros(x_length,1);
   if exist('cplexlp','file'),
-    opt = cplexoptimset('Display','off');
-    z(it) = 1;  [solution1,value,exitflag1] = cplexlp(z,M_ineq,b_ineq,M_eq,b_eq,x_lower,x_upper,[],opt);
-    z(it) = -1; [solution2,value,exitflag2] = cplexlp(z,M_ineq,b_ineq,M_eq,b_eq,x_lower,x_upper,[],opt);
+    opt =  cplexoptimset('cplex');
+    z(it) = 1;  [solution1,value,exitflag1] = cplexlp(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
+    z(it) = -1; [solution2,value,exitflag2] = cplexlp(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
   else
     opt = optimset('Display','off');
-    z(it) = 1;  [solution1,value,exitflag1] = linprog(z,M_ineq,b_ineq,M_eq,b_eq,x_lower,x_upper,[],opt);
-    z(it) = -1; [solution2,value,exitflag2] = linprog(z,M_ineq,b_ineq,M_eq,b_eq,x_lower,x_upper,[],opt);
+    z(it) = 1;  [solution1,value,exitflag1] = linprog(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
+    z(it) = -1; [solution2,value,exitflag2] = linprog(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
+  end
+  if [exitflag1 ~=1] + [exitflag2 ~=1],
+    exitflag1 
+    exitflag2
+    error('No feasible point found');
   end
   if [exitflag1 ==-3] + [exitflag2 ==-3],
     exitflag1 
     exitflag2
     error('Problem is unbounded');
   end
-  if [exitflag1 ~=1] + [exitflag2 ~=1],
-    exitflag1 
-    exitflag2
-    error('No feasible point found');
-  else
-    x1 = [x1, solution1];
-    x2 = [x2, solution2];
-  end
+  x1 = [x1, solution1];
+  x2 = [x2, solution2];
 end
 
 x_centre = mean([x1 x2],2);
-
-
-% ------------------------------------------------
-%% test example
-
-if 0,
- M_eq    = [];
- b_eq    = [];
- M_ineq  = [];
- b_ineq  = [];
- x_lower = -1;
- x_upper =  1;
- x = find_polytope_centre(M_eq,b_eq,M_ineq,b_ineq,x_lower,x_upper);
-end
-

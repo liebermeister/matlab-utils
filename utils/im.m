@@ -23,8 +23,10 @@ else,
   imagesc(X,m); 
 end
    
-if isempty(rownames), set(gca,'YTick',[]); 
-else, set(gca,'YTick',1:size(X,1)); set(gca,'YTickLabel',strrep(rownames,'_',' '));
+if isempty(rownames), 
+  set(gca,'YTick',[]); 
+else, 
+  set(gca,'YTick',1:size(X,1)); set(gca,'YTickLabel',strrep(rownames,'_',' '));
 end
 
 if isempty(colnames), set(gca,'XTick',[]); 

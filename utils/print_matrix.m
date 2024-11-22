@@ -1,6 +1,6 @@
-function b = print_matrix(matrix,rownames,colnames,flag_as_cellstr)
+function b = print_matrix(matrix,rownames,colnames,flag_as_cellstr, precision)
 
-eval(default('colnames','{[]}','flag_as_cellstr','0'));
+eval(default('colnames','{[]}','flag_as_cellstr','0','precision','4'));
 
 %b = print_matrix(matrix,rownames,colnames)
 
@@ -22,7 +22,7 @@ if prod(size(matrix)),
   
   for i=1:numel(b)
     if ~iscellstr(b(i))
-      b{i}=num2str(b{i},4);
+      b{i}=num2str(b{i},precision);
     end
   end
   if ~flag_as_cellstr,
@@ -34,4 +34,5 @@ end
   
 %b=strcat(b,{' '});
 %b=char(b);
-%b = reshape(b,prod(size(b))/(length(rownames)+1),length(rownames)+1 );
+%b =
+%reshape(b,prod(size(b))/(length(rownames)+1),length(rownames)+1 );

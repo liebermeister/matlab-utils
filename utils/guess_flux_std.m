@@ -1,15 +1,17 @@
-function flux_std = guess_flux_std(flux_data,alpha,beta);
+function flux_std = guess_flux_std(flux_data,alpha,beta,verbose);
 
-% flux_std = guess_flux_std(flux_data,alpha,beta);
+% flux_std = guess_flux_std(flux_data,alpha,beta,verbose);
 %
 % guess standard deviations for flux data without known standard deviations 
 % The formula assumes a hyperbolic curve vstd(vmean) with parameters
 % alpha:               relative error of large fluxes.
 % beta * max(abs(v)):  error width for fluxes v=0
 
-eval(default('alpha','0.1','beta','0.05'));
+eval(default('alpha','0.1','beta','0.05','verbose','0'));
 
-display('Making ad hoc assumptions about the error widths');
+if verbose,
+  display('Making ad hoc assumptions about the error widths');
+end
 
 b = beta/alpha * nanmax(abs(flux_data(:)));
 

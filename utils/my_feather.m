@@ -11,11 +11,12 @@ eval(default('color','[]','d','[]','options','struct'));
 
 options_default = struct('show_circle',1,'show_arrow',1,'clock_style',0);
 options = join_struct(options_default, options);
+
 if isempty(color), 
   color = [1 0 0];
 end
 
-light_color = [0.8,0.8,0.8] + 0.2 * color;
+disc_lightness = 0.1;
 
 if options.clock_style, z = j*z; end
 if length(d), z=z/max(abs(z))*d; end
@@ -30,7 +31,7 @@ hold on
 
 if options.show_circle,
   for i=1:length(x);
-    plot_circle(centres(1,i),centres(2,i),abs(z(i)),light_color);
+    plot_circle(centres(1,i),centres(2,i),abs(z(i)),color,disc_lightness);
   end
 end
 
@@ -63,6 +64,6 @@ function plot_triangle(xmin, xmax, ymin, ymax, l, col)
  fill(points(1,:),points(2,:),col,'EdgeColor',col);
 end
  
-function plot_circle(xm,ym,r,c);
+function plot_circle(xm,ym,r,c,disc_lightness);
 
-fill(xm + r * cos(0:0.1:2*pi), ym + r * sin(0:0.1:2*pi),c,'EdgeColor',c);
+fill(xm + r * cos(0:0.1:2*pi), ym + r * sin(0:0.1:2*pi),c,'EdgeColor',c, 'EdgeAlpha',disc_lightness, 'FaceAlpha',disc_lightness);
