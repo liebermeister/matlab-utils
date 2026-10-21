@@ -23,13 +23,3 @@ switch convention,
     sigma  = sqrt(( exp(sigma_log.^2) - 1).* exp(2* mu_log + sigma_log.^2));
 
 end
-
-% -------------------------------------------------
-% test
-
-if 0,
- mu=10;sigma = 100;
- convention = 'arithmetic';
- [mu_log,sigma_log] = lognormal_normal2log(mu,sigma,convention);
- [mu,sigma] = lognormal_log2normal(mu_log,sigma_log,convention)
-end

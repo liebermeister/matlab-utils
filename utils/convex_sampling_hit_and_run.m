@@ -24,52 +24,6 @@ function [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq
 % flag_artificial_centering
 % x_start
 
-if 0,
-  %% TEST CASE 1 
-  x_lower = [-1; -1];
-  x_upper = [1; 1];
-
-  M_ineq  = [1, 1];
-  b_ineq  = [0];
-  x_mean  = [-0.2; -0.2];
-  x_cov   = 0.2 ^ 2 * [1 0.99; 0.99 1];
-
-  if 0,
-    M_ineq  = [];
-    b_ineq  = [];
-    x_mean  = [0; -0.2];
-    x_cov   = 1 ^ 2 * [1 0; 0 0.02];
-  end
-
-  n_pick  = 5;
-  n_sample = 100;
-  flag_artificial_centering = 1;
-  clf; axis([0 1 0 1]);
-  [x,xmin,xmax] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, [], n_pick, flag_artificial_centering);
-  plot(x(1,:),x(2,:),'.'); hold on; 
-  plot([xmin(1),xmax(1)],[0 0],'r*'); hold on; 
-  plot([0 0],[xmin(2),xmax(2)],'r*'); hold off
-  axis([-1 1 -1 1]);
-
-  %% TEST CASE 2
-  x_lower = -rand(20,1);
-  x_upper = -x_lower;
-
-  M_ineq  = [];
-  b_ineq  = [];
-  x_mean  = [];
-  x_cov   = [];
-
-  n_pick   = 10;
-  n_sample = 1000;
-  flag_artificial_centering = 1;
-  [x,xmin,xmax] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, [], n_pick, flag_artificial_centering);
-  figure(1); plotmatrix(x')
-  figure(2); plot(sort(x'))
-
-end
-
-
 % --------------------------------------------------------
 
 eval(default('x_mean','[]','x_cov','[]','n_sample','[]','x_start','[]','flag_artificial_centering','0','n_warm','[]'))
@@ -82,9 +36,9 @@ else,
   %%x_cov_sqrt = [];
 end
 
-display(sprintf('%d variables, %d inequality constraints',size(M_ineq,2),length(b_ineq)));
+x_length = max(size(M_ineq,2), length(x_lower));
 
-x_length = size(M_ineq,2);
+display(sprintf('%d variables, %d inequality constraints',x_length,length(b_ineq)));
 
 if isnan(n_warm), n_warm = []; end
 if isempty(n_warm), 

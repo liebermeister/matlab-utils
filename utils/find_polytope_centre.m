@@ -15,21 +15,6 @@ eval(default('epsilon','[]','x_test','[]'));
 if isempty(epsilon), epsilon = 10^-10; end 
 
 % ------------------------------------------------
-% test example
-
-
-if 0,
-  M_eq    = [];
-  b_eq    = [];
-  M_ineq  = [];
-  b_ineq  = [];
-  x_lower = -1;
-  x_upper =  1;
-  x = find_polytope_centre(M_eq,b_eq,M_ineq,b_ineq,x_lower,x_upper);
-end
-
-
-% ------------------------------------------------
 % check if test vector satisfies all constraints (used only for debugging)
 
 
