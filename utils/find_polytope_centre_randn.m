@@ -32,7 +32,7 @@ end
 % -------------------------------
 % actual function
 
-x_length = length(x_lower);
+x_length = max(length(x_lower), size(M_ineq,2));
 
 if x_length == 0, 
   x_centre = [];
@@ -50,25 +50,13 @@ if sum(x_upper < x_lower), error('Wrong bounds'); end
 
 for it = 1:n,
   z = randn(x_length,1);
-  if exist('cplexlp','file'),
-    opt = cplexoptimset('cplex');
-    [solution1,value,exitflag1] = cplexlp(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
-    [solution2,value,exitflag2] = cplexlp(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
-  else
-    %opt = optimset('Display','off');
-    opt = optimoptions('linprog','Display','off','Algorithm','interior-point','ConstraintTolerance',10^-10);
-    [solution1,value,exitflag1] = linprog(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
-    [solution2,value,exitflag2] = linprog(z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon,[],opt);
+  [solution1,value,exitflag1] = lp_solve( z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon);
+  [solution2,value,exitflag2] = lp_solve(-z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon);
+  if exitflag1 == -3 || exitflag2 == -3,
+    error('Problem is unbounded (exit flags %d, %d)', exitflag1, exitflag2);
   end
-  if [exitflag1 ~=1] + [exitflag2 ~=1],
-    exitflag1 
-    exitflag2
-    error('No feasible point found');
-  end
-  if [exitflag1 ==-3] + [exitflag2 ==-3],
-    exitflag1 
-    exitflag2
-    error('Problem is unbounded');
+  if exitflag1 ~= 1 || exitflag2 ~= 1,
+    error('No feasible point found (exit flags %d, %d)', exitflag1, exitflag2);
   end
   x1 = [x1, solution1];
   x2 = [x2, solution2];

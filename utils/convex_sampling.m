@@ -91,8 +91,10 @@ switch method,
   case 'rejection',
     [x, x_lower, x_upper, success_flag, x_lower_list, x_upper_list] = convex_sampling_rejection_no_eq(A_ineq,b_ineq,n_sample,xl,xu,verbose,options);
   case 'extreme-points',
-    [x, x_lower, x_upper] = convex_sampling_extreme_points(A_ineq,b_ineq,[],[],n_sample,xl,xu);
+    [x, x_lower, x_upper, x_lower_list, x_upper_list] = convex_sampling_extreme_points(A_ineq,b_ineq,[],[],xl,xu);
+    success_flag = 1;
   case 'hit-and-run',
+    success_flag = 1;
     [x, x_lower, x_upper, x_lower_list, x_upper_list] = convex_sampling_hit_and_run(A_ineq, b_ineq, xl, xu, options.x_mean, options.x_cov, n_sample, options.n_warm, options.n_pick, options.flag_artificial_centering, options.x_start);
 end
 

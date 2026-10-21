@@ -46,16 +46,3 @@ else
   end
 
 end
-
-return
-  
-%% test
-  
-A = ones(2,3,4);
-B = ones(2,3,3);
-C = tensor_product(A,B,2,3);
-size(C)
-
-A = [1 2; 3 4]
-B = [1 2;]
-C = tensor_product(A,B,1,2)

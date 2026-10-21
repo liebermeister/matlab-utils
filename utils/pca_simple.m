@@ -1,6 +1,6 @@
-% PCA principal component analysis
+% PCA_SIMPLE principal component analysis
 %
-%   function [Xeig, A, S] = pca(X,graphicsflag,nplot,samplegroups)
+%   function [Xeig, A, S] = pca_simple(X,graphicsflag,nplot)
 % 
 %   the data matrix X contains the variables in its rows 
 %   and the cases in its columns
@@ -11,9 +11,12 @@
 %   graphicsflag   graphics output?
 %   nplot          no. of PC to plot
 %
+% Data columns containing NaN values are ignored.
+% (Renamed from pca.m, which shadowed the Statistics Toolbox function pca.)
+%
 % (c) W. Liebermeister 2001
 
-function [Xeig, A, S] = pca(X,graphicsflag,nplot,samplegroups)
+function [Xeig, A, S] = pca_simple(X,graphicsflag,nplot)
 
  X=X(:,find(sum(isnan(X))==0));
 
@@ -45,30 +48,5 @@ function [Xeig, A, S] = pca(X,graphicsflag,nplot,samplegroups)
   plotmatrix(S(1:min(4,nplot),:)',S(1:min(4,nplot),:)');
   title('Principal components');
 
-  if exist('samplegroups')
-    multipleGraphics(A(:,1:nplot),samplegroups,3);
-    figure(4);
-    style={'r.','g.','b.','k.','c.','m.','y.'};
-    scatterSamples(A(:,1:nplot),samplegroups,style);
-  else
-    multipleGraphics(A,{1:nplot},3);  
-    figure(4)
-    scatterSamples(A(:,1:nplot),{1:ndim});
-  end
-
 end
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
