@@ -18,7 +18,9 @@ savepath;   % optional: keep the folder on the path in future sessions
 
 - Matlab (tested with R2025b)
 - Optimization Toolbox, for the functions that solve linear programs
-  (`lp_solve`, `convex_sampling`, `find_polytope_centre`, ...)
+  (`lp_solve`, `convex_sampling`, `find_polytope_centre`, ...).
+  If IBM CPLEX is on the Matlab path, it is used instead of `linprog`;
+  see `help lp_solve` for how to switch this off.
 
 A few functions call functions from other packages:
 
