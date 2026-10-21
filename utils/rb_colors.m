@@ -13,7 +13,6 @@ c = flipud(c);
 
 if sum(c(:)<0)
   error('Negative values encountered')
-  c(c<0) = 0;
 end
 
 c(find(prod(double(c==1),2)),:) = 0.999;
