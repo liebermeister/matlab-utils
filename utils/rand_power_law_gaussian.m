@@ -8,5 +8,5 @@ function x = rand_power_law_gaussian(d,ni,nj,ymax,ymin,ymean,ystd)
 eval(default('d','1','ni','1','nj','1','ymax','1','ymin','0','ymean','0','ystd','1'));
 if ymax < ymin, error('ymax < ymin; reverse order of arguments'); end
 
-pdf_function = inline(sprintf('exp(-(x-%f)^2/%f^2) * abs(x)^%d',ymean,ystd,d));
+pdf_function = @(x) exp(-(x-ymean)^2/(2*ystd^2)) * abs(x)^d;
 x = rand_given_pdf(pdf_function, ymin, ymax, ni, nj);

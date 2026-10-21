@@ -18,7 +18,6 @@ eval(default('n_sample','1','xl','[]','xu','[]','verbose','0'));
 
 lx = size(A_ineq,2);
 
-opt = optimset('Display','off');
 success_flag = 1;
 
 for it = 1:lx,
@@ -27,15 +26,10 @@ for it = 1:lx,
   end
   vec = zeros(lx,1);
   vec(it) = 1;
-  if exist('cplexlp','file'),
-    [x_low,f_low,status1] = cplexlp( vec, A_ineq, b_ineq,[],[],[],[],[],opt);
-    [x_upp,f_upp,status2] = cplexlp(-vec, A_ineq, b_ineq,[],[],[],[],[],opt);  
-  else,
-    [x_low,f_low,status1] = linprog( vec, A_ineq, b_ineq,[],[],[],[],[],opt);
-    [x_upp,f_upp,status2] = linprog(-vec, A_ineq, b_ineq,[],[],[],[],[],opt);  
-  end
-  if ([status1 == -2]+[status2 == -2]), error('No feasible point found'); end
-  if ~double([status1 == 1]*[status2 == 1]), 
+  [x_low,f_low,status1] = lp_solve( vec, A_ineq, b_ineq);
+  [x_upp,f_upp,status2] = lp_solve(-vec, A_ineq, b_ineq);
+  if status1 == -2 || status2 == -2, error('No feasible point found'); end
+  if status1 ~= 1 || status2 ~= 1, 
     [status1, status2]
     error('linprog returned error');
   end
@@ -52,7 +46,7 @@ while z<n_sample,
   if verbose, 
     display(sprintf('Found  %d/%d feasible samples', z, n_sample))
   end
-  if A_ineq * this_x < b_ineq,
+  if all(A_ineq * this_x < b_ineq),
     z = z+1;
     x(:,z) = this_x;
   end

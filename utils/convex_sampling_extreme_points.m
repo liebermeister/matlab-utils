@@ -15,11 +15,11 @@ function [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_extreme_points(M_i
 % M_ineq, b_ineq
 % M_eq, b_eq
 % x_lower, x_upper
-% x_start (optional)
+% x_start (optional, no longer used)
 
 eval(default('x_start','[]'))
 
-x_length = length(x_lower);
+x_length = max(length(x_lower), size(M_ineq,2));
 
 display(sprintf('%d variables, %d inequality constraints',x_length,length(b_ineq)));
 
@@ -27,23 +27,16 @@ display(sprintf('%d variables, %d inequality constraints',x_length,length(b_ineq
 z_empty = zeros(x_length,1);
 
 X_sample = [];
+X_l      = [];
+X_u      = [];
 
 for it = 1:x_length,
 
   zmax = z_empty; zmax(it) = -1;
   zmin = z_empty; zmin(it) =  1;
 
-  if exist('cplexlp','file'),
-    opt =  cplexoptimset('cplex');
-    %opt = cplexoptimset('Display','off');
-    [xmax,value,exitflag1] = cplexlp(zmax, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper, x_start ,opt);
-    [xmin,value,exitflag2] = cplexlp(zmin, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper, x_start ,opt);
-  else  
-    %opt = optimset('MaxIter',10^10,'LargeScale','off','Display','off');
-    opt = optimset('Display','off');
-    [xmax,value,exitflag1] = linprog(zmax, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper, x_start ,opt);
-    [xmin,value,exitflag2] = linprog(zmin, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper, x_start ,opt);
-  end
+  [xmax,value,exitflag1] = lp_solve(zmax, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper);
+  [xmin,value,exitflag2] = lp_solve(zmin, M_ineq, b_ineq, M_eq, b_eq, x_lower, x_upper);
 
   if exitflag1 * exitflag2 < 0, 
     switch exitflag1
@@ -52,8 +45,10 @@ for it = 1:x_length,
     end
   else
     X_sample = [X_sample, xmin, xmax];
+    X_l      = [X_l, xmin];
+    X_u      = [X_u, xmax];
   end
 end
 
-x_min = min(X_sample,2);
-x_max = max(X_sample,2);
+x_min = min(X_sample,[],2);
+x_max = max(X_sample,[],2);

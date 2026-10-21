@@ -126,7 +126,7 @@ if flag_artificial_centering,
   end
   
   if pop_size<size(X_batch,2), 
-    ind = randperm(1:size(X_batch,2)); ind = ind(1:pop_size); 
+    ind = randperm(size(X_batch,2)); ind = ind(1:pop_size); 
     X_batch = X_batch(:,ind);
   elseif pop_size>size(X_batch,2), 
     ind = ceil(size(X_batch,2)*rand(pop_size,1));
@@ -196,7 +196,7 @@ else,
 
   if nargout>1,
     %% compute feasible ranges
-    [xx,sucess_flag,X_l,X_u] = convex_sampling_rejection_no_eq(M_ineq,b_ineq,0,x_lower,x_upper);
+    [~,~,~,~,X_l,X_u] = convex_sampling_rejection_no_eq(M_ineq,b_ineq,0,x_lower,x_upper);
   end
 
   X_sample = X_sample(:,end-n_pick*n_sample+1:n_pick:end);
@@ -245,18 +245,9 @@ while ~cont,
     bl_ineq = [bl_ineq;  b_ineq - M_ineq * my_x - epsilon ];
   end
  
-  if exist('cplexlp','file'),
-    opt =  cplexoptimset('cplex');
-    %opt = optimset('MaxIter',10^4,'LargeScale','off','Display','off');
-    [l1,value,exitflag1] = linprog(1, Ml_ineq, bl_ineq, [], [], -inf, inf, 0 ,opt);
-    [l2,value,exitflag2] = linprog(-1,Ml_ineq, bl_ineq, [], [], -inf, inf, 0 ,opt);
-  else
-    opt =  cplexoptimset('cplex');
-    %opt = cplexoptimset('Display','off');
-    [l1,value,exitflag1] = cplexlp(1, Ml_ineq, bl_ineq, [], [], -inf, inf, 0 ,opt);
-    [l2,value,exitflag2] = cplexlp(-1,Ml_ineq, bl_ineq, [], [], -inf, inf, 0 ,opt);
-  end
-  if [exitflag1 ==1] * [exitflag2 ==1], 
+  [l1,value,exitflag1] = lp_solve( 1, Ml_ineq, bl_ineq, [], [], -inf, inf);
+  [l2,value,exitflag2] = lp_solve(-1, Ml_ineq, bl_ineq, [], [], -inf, inf);
+  if exitflag1 == 1 && exitflag2 == 1, 
     cont = 1;
   else 
     switch exitflag1
