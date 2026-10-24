@@ -1,6 +1,6 @@
 % Tests for pca_simple
 
-addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'utils'));
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'matlab'));
 
 %% standard deviations of principal components agree with svd
 rng(0);

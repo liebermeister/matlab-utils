@@ -7,10 +7,10 @@ and [SBtab for Matlab](https://github.com/wolframliebermeister/sbtab-matlab).
 
 ## Installation
 
-Download or clone the repository and add the `utils` folder to your Matlab path:
+Download or clone the repository and add the `matlab` folder to your Matlab path:
 
 ```matlab
-addpath('/path/to/matlab-utils/utils');
+addpath('/path/to/matlab-utils/matlab');
 savepath;   % optional: keep the folder on the path in future sessions
 ```
 
