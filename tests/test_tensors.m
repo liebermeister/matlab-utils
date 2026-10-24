@@ -1,6 +1,6 @@
 % Tests for tensor_product and tensor_scale
 
-addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'matlab'));
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'matlab-utils'));
 
 %% tensor_product: size of result
 C = tensor_product(ones(2,3,4), ones(2,3,3), 2, 3);

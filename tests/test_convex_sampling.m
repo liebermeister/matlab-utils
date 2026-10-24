@@ -2,7 +2,7 @@
 %
 % Most tests use the triangle  x1 >= 0, x2 >= 0, x1 + x2 <= 1
 
-addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'matlab'));
+addpath(fullfile(fileparts(mfilename('fullpath')), '..', 'matlab-utils'));
 
 rng(1);
 A  = [1 1];
