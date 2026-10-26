@@ -17,10 +17,12 @@ savepath;   % optional: keep the folder on the path in future sessions
 ## Requirements
 
 - Matlab (tested with R2025b)
-- Optimization Toolbox, for the functions that solve linear programs
-  (`lp_solve`, `convex_sampling`, `find_polytope_centre`, ...).
-  If IBM CPLEX is on the Matlab path, it is used instead of `linprog`;
-  see `help lp_solve` for how to switch this off.
+- Optimization Toolbox, for the functions that solve linear and quadratic programs
+  (`lp_solve`, `qp_solve`, `convex_sampling`, `find_polytope_centre`, ...).
+- Optional: [Gurobi](https://www.gurobi.com) (free academic licenses). By default,
+  `lp_solve` and `qp_solve` use `linprog` and `quadprog`; after `optim_solver('gurobi')`
+  they use Gurobi (the choice is stored as a Matlab preference). This requires the
+  Gurobi Matlab interface (folder `matlab` in the Gurobi installation) on the Matlab path.
 
 A few functions call functions from other packages:
 
@@ -36,7 +38,8 @@ A few functions call functions from other packages:
 `convex_sampling` (uniform sampling in a convex polytope; rejection, extreme-point and
 hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extreme_points`,
 `convex_sampling_hit_and_run`, `find_polytope_centre`, `find_polytope_centre_randn`,
-`lp_solve` (wrapper around `linprog`)
+`lp_solve` and `qp_solve` (wrappers around `linprog` and `quadprog`, optionally using Gurobi),
+`optim_solver` (choose the solver for `lp_solve` and `qp_solve`)
 
 **Random numbers and statistics**
 `rand_power_law`, `rand_power_law_gaussian`, `rand_given_pdf`, `lognormal_normal2log`,
