@@ -29,7 +29,6 @@ A few functions call functions from other packages:
 | Function                   | Requires |
 |----------------------------|----------|
 | `annotate_list`            | [SBtab for Matlab](https://github.com/wolframliebermeister/sbtab-matlab) |
-| `network_derivative`       | [Metabolic Network Toolbox](https://github.com/liebermeister/metabolic-network-toolbox) |
 | `find_metabolites_by_name` | `kegg_name2id` (not publicly available) |
 
 ## Contents
@@ -56,21 +55,22 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 
 **Files and tables**
 `load_any_table`, `load_file_as_strings`, `load_unformatted_table`, `load_options_table`,
-`save_options_table`, `annotate_list`, `mytable`
+`save_options_table`, `save_matlab_structure_to_tsv`, `annotate_list`, `mytable`
 
 **Graphics and colours**
 `arc`, `circle`, `plot_square`, `plot_range`, `dot_matrix`, `im`, `my_feather`,
 `make_colorbar`, `my_colorbar`, `noticks`, `my_xticklabel`, `sfigure`, `subplot_n`,
 `line_colors`, `get_color`, `my_colors`, `rb_colors`, `rb_colors_dark`, `rby_colors`,
-`ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`
+`ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`, `wheelchart`
 
 **Graphs and networks**
-`graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`, `network_derivative`,
+`graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`,
 `numerical_elasticities`, `choose_period`, `find_metabolites_by_name`
 
 **Other**
 `default` (default values for function arguments), `join_struct`, `ca`, `my_spectrum`,
-`matlab_utils_installed`
+`matlab_utils_installed`, `my_lp_one_norm`, `bayesian_linear_model`, `scale_to_centre`,
+`logNormal_to_Normal`, `make_symmetric`
 
 Type `help <function name>` in Matlab for details on a function.
 
@@ -81,6 +81,10 @@ From the repository folder, run
 ```matlab
 results = runtests('tests')
 ```
+
+## Versions
+
+To see the installed version, type `matlab_utils_version`. Older versions can be downloaded from the [releases page](https://github.com/liebermeister/matlab-utils/releases) of this repository, and changes between versions are listed in `CHANGELOG.md`.
 
 ## License
 This package is released under the [GNU General Public License](LICENSE), version 2 or later.
