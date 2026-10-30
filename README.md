@@ -69,7 +69,8 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 
 **Other**
 `default` (default values for function arguments), `join_struct`, `ca`, `my_spectrum`,
-`matlab_utils_installed`, `my_lp_one_norm`, `bayesian_linear_model`, `scale_to_centre`,
+`matlab_utils_installed`, `matlab_utils_version`, `package_version_check`,
+`dependencies_check_once`, `my_lp_one_norm`, `bayesian_linear_model`, `scale_to_centre`,
 `logNormal_to_Normal`, `make_symmetric`
 
 Type `help <function name>` in Matlab for details on a function.
