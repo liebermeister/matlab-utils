@@ -30,7 +30,7 @@ if ~ok
   warning('%s version %s is installed, but version %s or later is required.', package_name, installed, minimum_version);
 elseif difference(1) > 0
   ok = false;
-  warning('%s version %s is installed, but this package was made for major version %d. Some functions may not work; older versions are available as releases of %s.', package_name, installed, version_numbers(minimum_version) * [1; 0; 0], package_name);
+  warning('%s version %s is installed, but this package was made for major version %d. Some functions may not work; older versions can be downloaded from the releases page of the package.', package_name, installed, version_numbers(minimum_version) * [1; 0; 0]);
 end
 
 
