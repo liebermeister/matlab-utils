@@ -29,7 +29,6 @@ A few functions call functions from other packages:
 | Function                   | Requires |
 |----------------------------|----------|
 | `annotate_list`            | [SBtab for Matlab](https://github.com/wolframliebermeister/sbtab-matlab) |
-| `network_derivative`       | [Metabolic Network Toolbox](https://github.com/liebermeister/metabolic-network-toolbox) |
 | `find_metabolites_by_name` | `kegg_name2id` (not publicly available) |
 
 ## Contents
@@ -65,7 +64,7 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 `ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`
 
 **Graphs and networks**
-`graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`, `network_derivative`,
+`graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`,
 `numerical_elasticities`, `choose_period`, `find_metabolites_by_name`
 
 **Other**

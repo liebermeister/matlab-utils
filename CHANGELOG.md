@@ -10,5 +10,6 @@ First numbered version.
 - `package_version_check`: compare installed packages with required versions
 - Convex sampling helpers, `qp_solve`, optional Gurobi support in `lp_solve` and `qp_solve`
 - Tests and README
+- `network_derivative` moved to the Metabolic Network Toolbox
 
 The state before the cleanup of October 2026 is available under the git tag `v0.9-legacy`.
