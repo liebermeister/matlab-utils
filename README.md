@@ -55,13 +55,13 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 
 **Files and tables**
 `load_any_table`, `load_file_as_strings`, `load_unformatted_table`, `load_options_table`,
-`save_options_table`, `annotate_list`, `mytable`
+`save_options_table`, `save_matlab_structure_to_tsv`, `annotate_list`, `mytable`
 
 **Graphics and colours**
 `arc`, `circle`, `plot_square`, `plot_range`, `dot_matrix`, `im`, `my_feather`,
 `make_colorbar`, `my_colorbar`, `noticks`, `my_xticklabel`, `sfigure`, `subplot_n`,
 `line_colors`, `get_color`, `my_colors`, `rb_colors`, `rb_colors_dark`, `rby_colors`,
-`ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`
+`ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`, `wheelchart`
 
 **Graphs and networks**
 `graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`,
@@ -69,7 +69,8 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 
 **Other**
 `default` (default values for function arguments), `join_struct`, `ca`, `my_spectrum`,
-`matlab_utils_installed`
+`matlab_utils_installed`, `my_lp_one_norm`, `bayesian_linear_model`, `scale_to_centre`,
+`logNormal_to_Normal`, `make_symmetric`
 
 Type `help <function name>` in Matlab for details on a function.
 
