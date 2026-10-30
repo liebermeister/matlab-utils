@@ -28,7 +28,6 @@ A few functions call functions from other packages:
 
 | Function                   | Requires |
 |----------------------------|----------|
-| `annotate_list`            | [SBtab for Matlab](https://github.com/wolframliebermeister/sbtab-matlab) |
 | `find_metabolites_by_name` | `kegg_name2id` (not publicly available) |
 
 ## Contents
@@ -55,7 +54,7 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 
 **Files and tables**
 `load_any_table`, `load_file_as_strings`, `load_unformatted_table`, `load_options_table`,
-`save_options_table`, `save_matlab_structure_to_tsv`, `annotate_list`, `mytable`
+`save_options_table`, `save_matlab_structure_to_tsv`, `mytable`
 
 **Graphics and colours**
 `arc`, `circle`, `plot_square`, `plot_range`, `dot_matrix`, `im`, `my_feather`,
