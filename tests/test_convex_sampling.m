@@ -63,3 +63,11 @@ x_lower = -rand(5,1);
 x_upper = -x_lower;
 x = convex_sampling_hit_and_run([], [], x_lower, x_upper, [], [], 50, [], 5, 1);
 assert(all(all(x >= x_lower - 1e-8 & x <= x_upper + 1e-8)));
+
+%% convex_sampling_hit_and_run: uniform samples within a triangle, no messages
+M = [-1 0; 0 -1; 1 1]; b = [0; 0; 1];
+rng(1);
+[output, X] = evalc('convex_sampling_hit_and_run(M, b, [], [], [], [], 3000, 500, 10, 0, [0.25; 0.25], 0)');
+assert(isempty(strtrim(output)));
+assert(all(all(M * X <= b + 1e-10)));
+assert(max(abs(mean(X,2) - 1/3)) < 0.02);

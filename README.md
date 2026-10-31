@@ -35,7 +35,7 @@ A few functions call functions from other packages:
 **Sampling and linear programming**
 `convex_sampling` (uniform sampling in a convex polytope; rejection, extreme-point and
 hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extreme_points`,
-`convex_sampling_hit_and_run`, `find_polytope_centre`, `find_polytope_centre_randn`,
+`convex_sampling_hit_and_run`, `multiple_testing_fdr`, `find_polytope_centre`, `find_polytope_centre_randn`,
 `lp_solve` and `qp_solve` (wrappers around `linprog` and `quadprog`, optionally using Gurobi),
 `optim_solver` (choose the solver for `lp_solve` and `qp_solve`)
 

@@ -1,6 +1,6 @@
-function [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, n_warm, n_pick, flag_artificial_centering, x_start)
+function [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, n_warm, n_pick, flag_artificial_centering, x_start, verbose)
 
-% [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, n_warm, n_pick, flag_artificial_centering, x_start)
+% [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov, n_sample, n_warm, n_pick, flag_artificial_centering, x_start, verbose)
 %
 % Sampling vectors in a convex polytope
 %
@@ -23,10 +23,11 @@ function [X_sample, x_min, x_max, X_l, X_u] = convex_sampling_hit_and_run(M_ineq
 % n_pick
 % flag_artificial_centering
 % x_start
+% verbose   show progress messages? (default 1)
 
 % --------------------------------------------------------
 
-eval(default('x_mean','[]','x_cov','[]','n_sample','[]','x_start','[]','flag_artificial_centering','0','n_warm','[]'))
+eval(default('x_mean','[]','x_cov','[]','n_sample','[]','x_start','[]','flag_artificial_centering','0','n_warm','[]','verbose','1'))
 
 if length(x_cov),
   x_cov_inv  = inv(x_cov);
@@ -38,7 +39,7 @@ end
 
 x_length = max(size(M_ineq,2), length(x_lower));
 
-display(sprintf('%d variables, %d inequality constraints',x_length,length(b_ineq)));
+if verbose, display(sprintf('%d variables, %d inequality constraints',x_length,length(b_ineq))); end
 
 if isnan(n_warm), n_warm = []; end
 if isempty(n_warm), 
@@ -47,7 +48,7 @@ end
 
 n_tot = n_warm + n_pick * n_sample;
 
-display('Sampling polytope');
+if verbose, display('Sampling polytope'); end
 
 % --------------------------------------------------------
 
@@ -131,7 +132,7 @@ else,
 
   %% single point hit and run
   if isempty(x_start),
-    display('Searching for polytope centre');
+    if verbose, display('Searching for polytope centre'); end
     x_start  = find_polytope_centre([],[],M_ineq,b_ineq,x_lower,x_upper);
     if isempty(x_start),
       error('Problem seems to be infeasible');
@@ -139,9 +140,10 @@ else,
   end
 
   my_x = x_start;
-  
+  X_sample = zeros(x_length,n_tot);
+
   for it = 1:n_tot,
-    if mod(it,100)==0,
+    if verbose && mod(it,100)==0,
       display(sprintf('Sample %d/%d',it,n_tot));
     end
     my_x = get_next_point(my_x, x_length, M_ineq, b_ineq, x_lower, x_upper, x_mean, x_cov_inv,[],[],0);
@@ -199,18 +201,15 @@ while ~cont,
     bl_ineq = [bl_ineq;  b_ineq - M_ineq * my_x - epsilon ];
   end
  
-  [l1,value,exitflag1] = lp_solve( 1, Ml_ineq, bl_ineq, [], [], -inf, inf);
-  [l2,value,exitflag2] = lp_solve(-1, Ml_ineq, bl_ineq, [], [], -inf, inf);
-  if exitflag1 == 1 && exitflag2 == 1, 
-    cont = 1;
-  else 
-    switch exitflag1
-      case -3,
-        error('Problem is unbounded');
-      case -2, warning('No feasible point found');
-    end
-    display('Trying another sample');
+  % end points of the chord through my_x in direction z: Ml_ineq * l <= bl_ineq
+  ind_up   = find(Ml_ineq > 0);
+  ind_down = find(Ml_ineq < 0);
+  if isempty(ind_up) || isempty(ind_down),
+    error('Problem is unbounded');
   end
+  l1 = max(bl_ineq(ind_down) ./ Ml_ineq(ind_down));
+  l2 = min(bl_ineq(ind_up)   ./ Ml_ineq(ind_up));
+  cont = l1 <= l2;
   
 end
 

@@ -2,6 +2,11 @@
 
 Version numbers have the form MAJOR.MINOR.PATCH. MAJOR changes when existing calls may stop working.
 
+## Not released yet
+
+- `multiple_testing_fdr` (moved here from the STM toolbox): Benjamini-Hochberg procedure; the previous version had about twice the nominal false discovery rate
+- `convex_sampling_hit_and_run`: end points computed analytically (no linear programs in each step); new optional argument `verbose`
+
 ## 1.0.0 (2026-10-31)
 
 First numbered version.
