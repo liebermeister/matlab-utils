@@ -42,7 +42,7 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 **Random numbers and statistics**
 `rand_power_law`, `rand_power_law_gaussian`, `rand_given_pdf`, `lognormal_normal2log`,
 `lognormal_log2normal`, `lognormal_standard_convention`, `my_corrcoef`, `nanquantile`,
-`histogram_fit`, `pca_simple`, `multidimensional_scaling`, `guess_flux_std`
+`histogram_fit`, `pca_simple`, `roundsd`, `zero_to_nan`, `multidimensional_scaling`, `guess_flux_std`
 
 **Matrices and tensors**
 `blockrep`, `choose_independent_rows`, `chop`, `column`, `matrix_add_block`,
@@ -60,7 +60,9 @@ hit-and-run methods), `convex_sampling_rejection_no_eq`, `convex_sampling_extrem
 `arc`, `circle`, `plot_square`, `plot_range`, `dot_matrix`, `im`, `my_feather`,
 `make_colorbar`, `my_colorbar`, `noticks`, `my_xticklabel`, `sfigure`, `subplot_n`,
 `line_colors`, `get_color`, `my_colors`, `rb_colors`, `rb_colors_dark`, `rby_colors`,
-`ryb_colors`, `sunrise_colors`, `colormapRGBmatrices`, `movie_save`, `listbox`, `wheelchart`
+`ryb_colors`, `sunrise_colors`, `blue_black_red_colors`, `color_scale_blue`, `color_scale_grey`,
+`colormapRGBmatrices`, `axis_almost_tight_positive`, `axis_tight_positive`, `sort_by_clustering`,
+`movie_save`, `listbox`, `wheelchart`
 
 **Graphs and networks**
 `graph_shortest_path`, `graph_circle_plot`, `netgraph_find_x_old`,
