@@ -3,7 +3,7 @@ Matlab utility functions
 
 General-purpose Matlab functions used by my other packages, for example the
 [Metabolic Network Toolbox](https://github.com/liebermeister/metabolic-network-toolbox)
-and [SBtab for Matlab](https://github.com/wolframliebermeister/sbtab-matlab).
+and [SBtab for Matlab](https://github.com/liebermeister/sbtab-matlab).
 
 ## Installation
 
