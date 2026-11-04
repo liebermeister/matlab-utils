@@ -4,6 +4,8 @@ Version numbers have the form MAJOR.MINOR.PATCH. MAJOR changes when existing cal
 
 ## Not released yet
 
+- **New colour convention: diverging colormaps go from blue (negative values) via white to red (positive values)**; before, they went from red to blue. Changed: `rb_colors`, `rb_colors_dark`, `my_colors` (and `ryb_colors`), `rby_colors`, `sunrise_colors`. Figures made with these colormaps (e.g. network graphics of the Metabolic Network Toolbox) now show positive values in red. Code that used `flipud(rb_colors)` etc. to get blue for negative values now gets red for them, and should drop the `flipud`. For n = 1, `my_colors` and `sunrise_colors` return red (was: blue)
+- `magma_colors`: sequential colormap 'magma' (values from matplotlib)
 - `createCombineArchive`: build a COMBINE archive (.omex) with manifest and OMEX metadata
 - `multiple_testing_fdr` (moved here from the STM toolbox): Benjamini-Hochberg procedure; the previous version had about twice the nominal false discovery rate
 - `convex_sampling_hit_and_run`: end points computed analytically (no linear programs in each step); new optional argument `verbose`

@@ -1,6 +1,11 @@
 function col = sunrise_colors(n)
 
-% function col = sunrise_colors(n)
+% SUNRISE_COLORS Diverging colormap: blue - light yellow - red
+%
+% col = sunrise_colors(n)   (default n = 250)
+%
+% Colours go from blue (first row, negative values) via light yellow to red (last row, positive values).
+% (Until November 2026, the order was reversed: red for negative values.)
 
 eval(default('n','250'));
 
@@ -27,8 +32,6 @@ c = [...
 nn  = size(c,1);
 col = interp1(1:nn,c,1:[nn-1]/(n-1):nn,'pchip');
 
-col = flipud(col);
-
 if n==1,
-  col = [0 0 1];
+  col = [1 0 0];
 end

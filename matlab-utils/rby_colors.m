@@ -1,5 +1,12 @@
 function col = rby_colors(n)
 
+% RBY_COLORS Diverging colormap: blue - white - yellow - red
+%
+% col = rby_colors(n)   (default n = 250)
+%
+% Colours go from blue (first row, negative values) via white to red (last row, positive values).
+% (Until November 2026, the order was reversed: red for negative values.)
+
 eval(default('n','250'));
 
 c = [25,25,202;...
@@ -25,6 +32,3 @@ c = [25,25,202;...
 nn = size(c,1);
 
 col = interp1(1:nn,c,1:(nn-1)/(n-1):nn);
-col = flipud(col);
-% eval(default('n','250'));
-% col = flipud(col(n));
