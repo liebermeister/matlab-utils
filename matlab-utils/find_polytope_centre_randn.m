@@ -48,10 +48,21 @@ x2 = [];
 
 if sum(x_upper < x_lower), error('Wrong bounds'); end
 
+% Shrink the bounds by epsilon (to obtain an interior point), except for
+% variables with (almost) fixed values, x_upper - x_lower < 2 * epsilon,
+% where shrinking would make the problem infeasible
+x_lower_eps = x_lower + epsilon;
+x_upper_eps = x_upper - epsilon;
+if ~isempty(x_lower) && ~isempty(x_upper)
+  ind_fixed = find(x_upper_eps < x_lower_eps);
+  x_lower_eps(ind_fixed) = x_lower(ind_fixed);
+  x_upper_eps(ind_fixed) = x_upper(ind_fixed);
+end
+
 for it = 1:n,
   z = randn(x_length,1);
-  [solution1,value,exitflag1] = lp_solve( z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon);
-  [solution2,value,exitflag2] = lp_solve(-z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower+epsilon,x_upper-epsilon);
+  [solution1,value,exitflag1] = lp_solve( z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower_eps,x_upper_eps);
+  [solution2,value,exitflag2] = lp_solve(-z,M_ineq,b_ineq-epsilon,M_eq,b_eq,x_lower_eps,x_upper_eps);
   if exitflag1 == -3 || exitflag2 == -3,
     error('Problem is unbounded (exit flags %d, %d)', exitflag1, exitflag2);
   end

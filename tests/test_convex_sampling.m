@@ -71,3 +71,9 @@ rng(1);
 assert(isempty(strtrim(output)));
 assert(all(all(M * X <= b + 1e-10)));
 assert(max(abs(mean(X,2) - 1/3)) < 0.02);
+
+%% find_polytope_centre and find_polytope_centre_randn: fixed variable (lower bound = upper bound)
+x = find_polytope_centre([], [], A, b, [0; 0.5], [1; 0.5]);
+assert(abs(x(2) - 0.5) < 1e-12 && x(1) > 0 && x(1) < 0.5);
+x = find_polytope_centre_randn([], [], A, b, [0; 0.5], [1; 0.5], [], 20);
+assert(abs(x(2) - 0.5) < 1e-12 && x(1) > 0 && x(1) < 0.5);
