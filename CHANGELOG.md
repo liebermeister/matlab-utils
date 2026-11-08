@@ -4,6 +4,8 @@ Version numbers have the form MAJOR.MINOR.PATCH. MAJOR changes when existing cal
 
 ## Not released yet
 
+- `cell_string2num`: numerical arrays are returned unchanged, and numbers within cell arrays are kept (before, they became NaN; this broke SBtab tables built in Matlab)
+- `load_config_table`: read tool options from an SBtab Config table (columns `!ID` or `!Option`, and `!Value`) into a struct, without the SBtab toolbox; values are converted to numbers, empty arrays, empty cells (`{}`), empty strings (`''`) or JSON-decoded arrays and structs, and option names with dots (e.g. `quantities.v.max`) give nested structs. Used by other packages to read the default values of their options from Config files
 - `movie_save`: writes to the folder given in the file name without changing the current directory (before, it called `cd`); no longer calls `axis tight` on the current figure; `my_delay` is used when no duration is given (before, the default duration of 20 s always overrode it); new formats 'mp4' (MPEG-4, where available) and 'avi' (Motion JPEG), written with `VideoWriter`
 - **New colour convention: diverging colormaps go from blue (negative values) via white to red (positive values)**; before, they went from red to blue. Changed: `rb_colors`, `rb_colors_dark`, `my_colors` (and `ryb_colors`), `rby_colors`, `sunrise_colors`. Figures made with these colormaps (e.g. network graphics of the Metabolic Network Toolbox) now show positive values in red. Code that used `flipud(rb_colors)` etc. to get blue for negative values now gets red for them, and should drop the `flipud`. For n = 1, `my_colors` and `sunrise_colors` return red (was: blue)
 - `magma_colors`: sequential colormap 'magma' (values from matplotlib)

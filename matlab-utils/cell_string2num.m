@@ -1,6 +1,9 @@
 function N = cell_string2num(C)
 
 % N = cell_string2num(C)
+%
+% Convert a cell array of strings into a numerical array (non-numerical strings -> NaN).
+% Numerical arrays are returned unchanged; numbers within cell arrays are kept.
 
 %try
 %N = zeros(size(C));
@@ -26,4 +29,18 @@ function N = cell_string2num(C)
 %  warning('Non-numerical value found')
 %end
 
+% numerical input (e.g. columns of SBtab objects built in Matlab): returned unchanged
+if isnumeric(C) || islogical(C)
+  N = double(C);
+  return
+end
+
 N = str2double(C);
+
+% cell arrays that contain numbers (e.g. tables built in Matlab): use the numbers
+if iscell(C)
+  is_number = cellfun(@(e) (isnumeric(e) || islogical(e)) && isscalar(e), C);
+  if any(is_number(:))
+    N(is_number) = double([C{is_number}]);
+  end
+end
