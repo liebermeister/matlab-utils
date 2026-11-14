@@ -41,7 +41,8 @@ switch format,
       im{itt} = frame2im(M(itt));
       [A,map] = rgb2ind(im{itt},256);
       if itt == 1
-        imwrite(A,map,[fname '.gif'],'gif','LoopCount',Inf,'DelayTime',my_delay,'ScreenSize',[400, 400]);
+        % logical screen = frame size (a fixed [400,400] cropped larger frames in viewers)
+        imwrite(A,map,[fname '.gif'],'gif','LoopCount',Inf,'DelayTime',my_delay,'ScreenSize',[size(A,2), size(A,1)]);
       else        
         imwrite(A,map,[fname '.gif'],'gif','WriteMode','append','DelayTime',my_delay);
       end
